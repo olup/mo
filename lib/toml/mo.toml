@@ -1,0 +1,6 @@
+[package]
+name = "toml"
+root = "src"
+
+[scripts]
+test = "cargo run --manifest-path ../../Cargo.toml -- test test/toml_test.mo"

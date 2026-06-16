@@ -1,0 +1,6 @@
+[package]
+name = "native_answer"
+root = "src"
+
+[native.macos.aarch64]
+static_libraries = ["vendor/libanswer.a"]

@@ -1,0 +1,9 @@
+[package]
+name = "raylib_3d_demo"
+root = "app"
+
+[scripts]
+prepare = "./prepare-raylib.sh"
+build = "cargo run --manifest-path ../../Cargo.toml -- build app/main.mo -o /tmp/mo_raylib_3d_demo"
+run = "cargo run --manifest-path ../../Cargo.toml -- run app/main.mo"
+demo = "./prepare-raylib.sh && cargo run --manifest-path ../../Cargo.toml -- run app/main.mo"

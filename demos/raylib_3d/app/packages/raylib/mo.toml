@@ -1,0 +1,12 @@
+[package]
+name = "raylib"
+root = "src"
+
+[native.macos.aarch64]
+static_libraries = ["vendor/libraylib_mo.a", "vendor/libraylib.a"]
+link_args = [
+    "-framework", "Cocoa",
+    "-framework", "IOKit",
+    "-framework", "CoreVideo",
+    "-framework", "OpenGL",
+]

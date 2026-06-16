@@ -1,0 +1,2 @@
+[dependencies]
+native_answer = "packages/native_answer/src"

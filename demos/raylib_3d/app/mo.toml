@@ -1,0 +1,6 @@
+[package]
+name = "raylib_3d_demo"
+root = "."
+
+[dependencies]
+raylib = "packages/raylib/src"

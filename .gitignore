@@ -1,0 +1,6 @@
+/target/
+/build/
+/mo_pokemon_server_requests.txt
+/a.o
+__pycache__/
+*.pyc

@@ -1,0 +1,5 @@
+/build/
+/raylib-*.tar.gz
+/libraylib.a
+/libraylib_mo.a
+/*.o

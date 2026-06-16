@@ -1,0 +1,6 @@
+[package]
+name = "sqlite"
+root = "src"
+
+[native.macos.aarch64]
+static_libraries = ["vendor/libsqlite3.a"]
