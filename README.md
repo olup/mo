@@ -12,10 +12,13 @@ Install the latest pre-alpha release:
 curl -fsSL https://raw.githubusercontent.com/olup/mo/main/scripts/install.sh | sh
 ```
 
-Add this to your shell profile to keep `mo` on your `PATH`:
+The installer adds `mo` to your shell profile. Restart your shell, or source the
+profile printed by the installer.
+
+To skip shell profile changes:
 
 ```sh
-export PATH="$HOME/.local/mo:$PATH"
+curl -fsSL https://raw.githubusercontent.com/olup/mo/main/scripts/install.sh | MO_INSTALL_UPDATE_PROFILE=0 sh
 ```
 
 To install somewhere else:

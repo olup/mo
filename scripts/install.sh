@@ -4,6 +4,7 @@ set -eu
 repo="${MO_REPO:-olup/mo}"
 version="${MO_VERSION:-v0.1.0-pre-alpha}"
 prefix="${MO_PREFIX:-$HOME/.local/mo}"
+update_profile="${MO_INSTALL_UPDATE_PROFILE:-1}"
 
 platform="$(uname -s)-$(uname -m)"
 case "$platform" in
@@ -53,6 +54,47 @@ MO
 
 "$prefix/mo" check "$smoke" >/dev/null
 
+path_entry="$prefix"
+case "$path_entry" in
+    "$HOME"/*)
+        path_entry="\$HOME/${path_entry#"$HOME"/}"
+        ;;
+esac
+path_line="export PATH=\"$path_entry:\$PATH\""
+
+profile=""
+if [ "$update_profile" != "0" ]; then
+    if [ "${MO_PROFILE:-}" ]; then
+        profile="$MO_PROFILE"
+    elif [ -n "${ZSH_VERSION:-}" ]; then
+        profile="$HOME/.zshrc"
+    elif [ -n "${BASH_VERSION:-}" ]; then
+        profile="$HOME/.bashrc"
+    elif [ -f "$HOME/.zshrc" ]; then
+        profile="$HOME/.zshrc"
+    elif [ -f "$HOME/.bashrc" ]; then
+        profile="$HOME/.bashrc"
+    else
+        profile="$HOME/.profile"
+    fi
+
+    mkdir -p "$(dirname "$profile")"
+    touch "$profile"
+    if ! grep -F "$path_line" "$profile" >/dev/null 2>&1; then
+        {
+            echo ""
+            echo "# mo"
+            echo "$path_line"
+        } >> "$profile"
+    fi
+fi
+
 echo "mo installed to $prefix"
-echo "add this to your shell profile:"
-echo "  export PATH=\"$prefix:\$PATH\""
+if [ "$profile" ]; then
+    echo "updated $profile"
+    echo "restart your shell or run:"
+    echo "  . \"$profile\""
+else
+    echo "add this to your shell profile:"
+    echo "  $path_line"
+fi
