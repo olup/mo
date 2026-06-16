@@ -44,3 +44,17 @@ Each archive contains:
 - `std/`, `core/`, `alloc/`, and `lib/`
 - `docs/`
 - `VERSION`
+
+## Installation Model
+
+Pre-alpha release archives are relocatable as a directory. The compiler looks for
+Mo package roots in this order:
+
+1. `MO_ROOT`, when set
+2. the directory containing the `mo` executable, when it also contains `std/`,
+   `core/`, and `alloc/`
+3. the source checkout used to build the compiler, as a development fallback
+
+This means users can either run `mo` directly from the extracted archive or
+install the archive under a stable prefix such as `/opt/mo` and add that
+directory to `PATH`.

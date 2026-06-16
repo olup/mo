@@ -1,4 +1,5 @@
 use std::collections::{HashMap, HashSet};
+use std::env;
 use std::fs;
 use std::path::{Component, Path, PathBuf};
 
@@ -765,19 +766,38 @@ fn extend_unique_string(output: &mut Vec<String>, input: Vec<String>) {
 }
 
 fn std_package_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("std")
+    mo_package_root().join("std")
 }
 
 fn core_package_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("core")
+    mo_package_root().join("core")
 }
 
 fn alloc_package_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("alloc")
+    mo_package_root().join("alloc")
 }
 
 fn userland_package_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("lib")
+    mo_package_root().join("lib")
+}
+
+fn mo_package_root() -> PathBuf {
+    if let Some(root) = env::var_os("MO_ROOT") {
+        return PathBuf::from(root);
+    }
+
+    if let Ok(exe) = env::current_exe() {
+        if let Some(root) = exe.parent() {
+            if root.join("std").exists()
+                && root.join("core").exists()
+                && root.join("alloc").exists()
+            {
+                return root.to_path_buf();
+            }
+        }
+    }
+
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
 fn normalize_existing_path(path: &Path) -> Result<PathBuf, Vec<Diagnostic>> {
