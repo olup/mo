@@ -6,16 +6,22 @@ Current status: pre-alpha. The compiler, runtime, standard library, and package 
 
 ## Install
 
-The repository is private, so install from an authenticated `gh` session:
+Install the latest pre-alpha release:
 
 ```sh
-case "$(uname -s)-$(uname -m)" in Darwin-arm64) p=mo-aarch64-apple-darwin;; Darwin-x86_64) p=mo-x86_64-apple-darwin;; Linux-aarch64|Linux-arm64) p=mo-aarch64-unknown-linux-gnu;; Linux-x86_64) p=mo-x86_64-unknown-linux-gnu;; *) echo "unsupported platform: $(uname -s)-$(uname -m)" >&2; exit 1;; esac; d="$(mktemp -d)"; gh release download v0.1.0-pre-alpha -R olup/mo -p "$p.tar.gz" -O "$d/mo.tar.gz" && rm -rf "$HOME/.local/mo" && mkdir -p "$HOME/.local/mo" && tar -xzf "$d/mo.tar.gz" -C "$HOME/.local/mo" --strip-components=1 && export PATH="$HOME/.local/mo:$PATH" && printf 'fn main() -> Int {\n    return 0\n}\n' > "$d/smoke.mo" && mo check "$d/smoke.mo"
+curl -fsSL https://raw.githubusercontent.com/olup/mo/main/scripts/install.sh | sh
 ```
 
 Add this to your shell profile to keep `mo` on your `PATH`:
 
 ```sh
 export PATH="$HOME/.local/mo:$PATH"
+```
+
+To install somewhere else:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/olup/mo/main/scripts/install.sh | MO_PREFIX=/opt/mo sh
 ```
 
 The installer selects one of these release archives:
