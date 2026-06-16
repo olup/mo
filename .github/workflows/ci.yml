@@ -20,8 +20,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-14
           - ubuntu-latest
+          - macos-14
 
     steps:
       - name: Checkout
@@ -38,7 +38,12 @@ jobs:
       - name: Check formatting
         run: cargo fmt --check
 
-      - name: Test
+      - name: Test Rust library
+        if: matrix.os == 'ubuntu-latest'
+        run: cargo test --locked --lib
+
+      - name: Test full suite
+        if: matrix.os == 'macos-14'
         run: cargo test --locked
 
       - name: Build release
