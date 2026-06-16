@@ -3,7 +3,7 @@ import * as path from "std/path"
 import * as process from "std/process"
 
 fn fixture() -> String {
-    return path.join(process.current_dir(), "build/std_fs_test.txt")
+    return path.join(process.current_dir(), "std_fs_test.txt")
 }
 
 test "std fs write read exists remove" {
